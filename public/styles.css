@@ -1,0 +1,56 @@
+h1 {
+  color: red;
+  text-align: center;
+}
+
+body {
+  background-color: #ffffff;
+}
+
+.centered {
+  padding-top: 200px;
+  text-align: center;
+}
+
+.secret-text {
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
+  background-color: #000;
+}
+.income {
+  display: flex;
+  flex-direction: column;
+}
+
+.incomeContainer form {
+  display: flex;
+  flex-direction: column;
+}
+
+.incomeExpense {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dataBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.amountAndDate {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+form button {
+  background-color: aqua;
+  margin-top: 5px;
+  cursor: pointer;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+}

@@ -1,0 +1,83 @@
+<%- include('partials/header') %>
+<section>
+  <a class="btn btn-light btn-lg" href="/logout" role="button">Log Out</a>
+  <hr />
+</section>
+<div class="container">
+  <h1>Welcome, <%= displayName %></h1>
+  <div class="currentBalance"><h1>Here's your current Balance $$$</h1></div>
+  <div class="incomeExpense">
+    <div class="incomeContainer">
+      <h2>Income</h2>
+      <form id="income-form" action="/income/add" method="POST">
+        <div class="amountAndDate">
+          <div class="dataBlock">
+            <label for="amount">Income amount:</label>
+            <input type="text" name="amount" required />
+          </div>
+          <div class="dataBlock">
+            <label for="date">Date:</label>
+            <input type="date" name="date" required />
+          </div>
+        </div>
+        <div class="dataBlock">
+          <label for="tag">Tag:</label>
+          <input type="text" name="tag_name" list="income-tags" required />
+        </div>
+        <datalist id="income-tags">
+          <% if (incomeTags) { %> <% incomeTags.forEach(tag => { %>
+          <option value="<%= tag.name %>"><%= tag.name %></option>
+          <% }); %> <% } %>
+        </datalist>
+        <button type="submit">Add Income</button>
+      </form>
+    </div>
+    <!-- expense container -->
+    <div class="incomeContainer">
+      <h2>Expense</h2>
+      <form id="expense-form" action="/expense/add" method="POST">
+        <div class="inputContainer">
+          <div class="amountAndDate">
+            <div class="dataBlock">
+              <label for="amount">Expense amount:</label>
+              <input type="text" name="amount" required />
+            </div>
+            <div class="dataBlock">
+              <label for="date">Date:</label>
+              <input type="date" name="date" required />
+            </div>
+          </div>
+          <div class="dataBlock">
+            <label for="tag">Tag:</label>
+            <input type="text" name="tag_name" list="expense-tags" required />
+          </div>
+          <datalist id="expense-tags">
+            <% if (expenseTags) { %> <% expenseTags.forEach(tag => { %>
+            <option value="<%= tag.name %>"><%= tag.name %></option>
+            <% }); %> <% } %>
+          </datalist>
+        </div>
+        <button type="submit">Add Expense</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById("income-form")
+    .addEventListener("submit", function (event) {
+      //event.preventDefault(); // Prevent form submission for debugging
+
+      const amount = document.querySelector("input[name='amount']").value;
+      const date = document.querySelector("input[name='date']").value;
+      const tagName = document.querySelector("input[name='tag_name']").value;
+
+      console.log("Form submitted with the following data:");
+      console.log("Amount:", amount);
+      console.log("Date:", date);
+      console.log("Tag Name:", tagName);
+
+      // Allow form to be submitted
+    });
+</script>
