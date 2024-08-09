@@ -40,6 +40,22 @@ export const addIncome = async (req, res) => {
   }
 };
 
+export const deleteIncome = async (req, res) => {
+  const incomeId = req.params.id;
+  const user_id = req.user.id;
+
+  try {
+    await db.query("DELETE FROM income WHERE id = $1 AND user_id = $2", [
+      incomeId,
+      user_id,
+    ]);
+    res.redirect("/secrets");
+  } catch (err) {
+    console.error("Database deletion error:", err);
+    res.status(500).send("Server error");
+  }
+};
+
 // Fetch incomes for the current month
 export const getIncomesForCurrentMonth = async (req, res) => {
   const user_id = req.user.id;
@@ -53,7 +69,7 @@ export const getIncomesForCurrentMonth = async (req, res) => {
 
     // Fetch incomes
     const incomesResult = await db.query(
-      `SELECT income.amount, income.date, incometags.name AS tag_name
+      `SELECT income.id, income.amount, income.date, incometags.name AS tag_name
        FROM income
        JOIN incometags ON income.tag_id = incometags.id
        WHERE income.user_id = $1 AND income.date BETWEEN $2 AND $3

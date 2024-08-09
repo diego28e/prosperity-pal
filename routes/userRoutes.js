@@ -3,10 +3,12 @@ import passport from "passport";
 import {
   getIncomeTags,
   getIncomesForCurrentMonth,
+  deleteIncome,
 } from "../controllers/incomeController.js";
 import {
   getExpenseTags,
   getExpensesForCurrentMonth,
+  deleteExpense,
 } from "../controllers/expenseController.js";
 
 const router = express.Router();
@@ -30,6 +32,7 @@ router.get("/logout", (req, res) => {
 
 router.get("/secrets", async (req, res) => {
   console.log(req.user);
+
   if (req.isAuthenticated()) {
     try {
       const incomeTags = await getIncomeTags(req, res);
@@ -52,6 +55,7 @@ router.get("/secrets", async (req, res) => {
         expenses: expenses,
         totalExpenses: totalExpenses,
       });
+      console.log(incomes);
     } catch (err) {
       console.error(err);
       res.status(500).send("Server error");
@@ -75,5 +79,8 @@ router.get(
     failureRedirect: "/login",
   })
 );
+
+router.post("/income/delete/:id", deleteIncome);
+router.post("/expense/delete/:id", deleteExpense);
 
 export default router;

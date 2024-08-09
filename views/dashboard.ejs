@@ -52,8 +52,10 @@
               >
             </p>
             <span class="editDelete"
-              ><i class="fa-regular fa-pen-to-square"></i
-              ><i class="fa-solid fa-trash"></i
+              ><form action="/income/delete/<%= income.id %>" method="POST">
+                <button type="submit" class="deleteButton">
+                  <i class="fa-solid fa-trash"></i>
+                </button></form
             ></span>
           </li>
           <% }); %>
@@ -105,8 +107,10 @@
               >
             </p>
             <span class="editDelete"
-              ><i class="fa-regular fa-pen-to-square"></i
-              ><i class="fa-solid fa-trash"></i
+              ><form action="/expense/delete/<%= expense.id %>" method="POST">
+                <button type="submit" class="deleteButton">
+                  <i class="fa-solid fa-trash"></i>
+                </button></form
             ></span>
           </li>
           <% }); %>

@@ -6,11 +6,11 @@ export const addExpense = async (req, res) => {
   const user_id = req.user.id;
 
   // Log the values received from the frontend
-  console.log("Received values from frontend:");
+  /*   console.log("Received values from frontend:");
   console.log("Amount:", amount);
   console.log("Date:", date);
   console.log("Tag Name:", tag_name);
-  console.log("User ID:", user_id);
+  console.log("User ID:", user_id); */
 
   try {
     // Insert the tag if it doesn't exist
@@ -47,6 +47,22 @@ export const addExpense = async (req, res) => {
   }
 };
 
+export const deleteExpense = async (req, res) => {
+  const expenseId = req.params.id;
+  const user_id = req.user.id;
+
+  try {
+    await db.query("DELETE FROM expenses WHERE id = $1 AND user_id = $2", [
+      expenseId,
+      user_id,
+    ]);
+    res.redirect("/secrets");
+  } catch (err) {
+    console.error("Database deletion error", err);
+    res.status(500).send("Server error");
+  }
+};
+
 //Fetch expenses for the current month
 export const getExpensesForCurrentMonth = async (req, res) => {
   const user_id = req.user.id;
@@ -60,7 +76,7 @@ export const getExpensesForCurrentMonth = async (req, res) => {
 
     //Fetch expenses
     const expensesResult = await db.query(
-      `SELECT expenses.amount, expenses.date, expensetags.name AS tag_name
+      `SELECT expenses.id, expenses.amount, expenses.date, expensetags.name AS tag_name
       FROM expenses
       JOIN expensetags ON expenses.tag_id = expensetags.id
       WHERE expenses.user_id = $1 AND expenses.date BETWEEN $2 AND $3
