@@ -1,4 +1,5 @@
 import db from "../config/db.js";
+import moment from "moment";
 
 export const addExpense = async (req, res) => {
   const { amount, date, tag_name } = req.body;
@@ -43,6 +44,44 @@ export const addExpense = async (req, res) => {
   } catch (err) {
     console.error("Database insertion error:", err);
     res.redirect("/secrets");
+  }
+};
+
+//Fetch expenses for the current month
+export const getExpensesForCurrentMonth = async (req, res) => {
+  const user_id = req.user.id;
+  const startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
+  const endOfMonth = moment().endOf("month").format("YYYY-MM-DD");
+
+  try {
+    console.log(
+      `Fetching expenses for user_id: ${user_id} between ${startOfMonth} and ${endOfMonth}`
+    );
+
+    //Fetch expenses
+    const expensesResult = await db.query(
+      `SELECT expenses.amount, expenses.date, expensetags.name AS tag_name
+      FROM expenses
+      JOIN expensetags ON expenses.tag_id = expensetags.id
+      WHERE expenses.user_id = $1 AND expenses.date BETWEEN $2 AND $3
+      ORDER BY expenses.date`,
+      [user_id, startOfMonth, endOfMonth]
+    );
+
+    const expenses = expensesResult.rows;
+    const totalExpenses = expenses.reduce(
+      (total, expense) => total + parseFloat(expense.amount),
+      0
+    );
+
+    //Log the data retrieved from the database
+    console.log("Expenses retrieved from databse:", expenses);
+    console.log("total expenses:", totalExpenses);
+
+    return { expenses, totalExpenses };
+  } catch (err) {
+    console.error("Database query error:", err);
+    return { expenses: [], totalExpenses: 0 };
   }
 };
 

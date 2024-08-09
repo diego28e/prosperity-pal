@@ -5,7 +5,14 @@
 </section>
 <div class="container">
   <h1>Welcome, <%= displayName %></h1>
-  <div class="currentBalance"><h1>Here's your current Balance $$$</h1></div>
+
+  <div class="balance-summary">
+    <!--     <h3>Total Income: <%= totalIncome.toLocaleString() %></h3>
+    <h3>Total Expenses: <%= totalExpenses.toLocaleString() %></h3> -->
+    <h3>
+      Remaining Balance: <%= (totalIncome - totalExpenses).toLocaleString() %>
+    </h3>
+  </div>
   <div class="incomeExpense">
     <div class="incomeContainer">
       <h2>Income</h2>
@@ -31,9 +38,32 @@
         </datalist>
         <button type="submit">Add Income</button>
       </form>
+      <div class="income-list">
+        <h3>Incomes for the current month:</h3>
+        <ul>
+          <% incomes.forEach(income => { %>
+          <li class="incomeList">
+            <p class="incomeBlock">
+              <%= income.tag_name %>: <%=
+              parseFloat(income.amount).toLocaleString() %>
+
+              <span class="incomeDate"
+                ><%= new Date(income.date).toLocaleDateString() %></span
+              >
+            </p>
+            <span class="editDelete"
+              ><i class="fa-regular fa-pen-to-square"></i
+              ><i class="fa-solid fa-trash"></i
+            ></span>
+          </li>
+          <% }); %>
+        </ul>
+        <h3>Total Income: <%= totalIncome.toLocaleString() %></h3>
+      </div>
     </div>
+
     <!-- expense container -->
-    <div class="incomeContainer">
+    <div class="expenseContainer">
       <h2>Expense</h2>
       <form id="expense-form" action="/expense/add" method="POST">
         <div class="inputContainer">
@@ -59,6 +89,30 @@
         </div>
         <button type="submit">Add Expense</button>
       </form>
+
+      <!-- Display the list of expenses -->
+      <div class="expense-list">
+        <h3>Expenses for the current month:</h3>
+        <ul>
+          <% expenses.forEach(expense => { %>
+          <li class="expenseList">
+            <p class="expenseBlock">
+              <%= expense.tag_name %>: <%=
+              parseFloat(expense.amount).toLocaleString() %>
+
+              <span class="expenseDate"
+                ><%= new Date(expense.date).toLocaleDateString() %></span
+              >
+            </p>
+            <span class="editDelete"
+              ><i class="fa-regular fa-pen-to-square"></i
+              ><i class="fa-solid fa-trash"></i
+            ></span>
+          </li>
+          <% }); %>
+        </ul>
+        <h3>Total Expenses: <%= totalExpenses.toLocaleString() %></h3>
+      </div>
     </div>
   </div>
 </div>

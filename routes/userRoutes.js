@@ -1,7 +1,13 @@
 import express from "express";
 import passport from "passport";
-import { getIncomeTags } from "../controllers/incomeController.js";
-import { getExpenseTags } from "../controllers/expenseController.js";
+import {
+  getIncomeTags,
+  getIncomesForCurrentMonth,
+} from "../controllers/incomeController.js";
+import {
+  getExpenseTags,
+  getExpensesForCurrentMonth,
+} from "../controllers/expenseController.js";
 
 const router = express.Router();
 
@@ -28,10 +34,23 @@ router.get("/secrets", async (req, res) => {
     try {
       const incomeTags = await getIncomeTags(req, res);
       const expenseTags = await getExpenseTags(req, res);
+      const { incomes, totalIncome } = await getIncomesForCurrentMonth(
+        req,
+        res
+      );
+
+      const { expenses, totalExpenses } = await getExpensesForCurrentMonth(
+        req,
+        res
+      );
       res.render("dashboard.ejs", {
         displayName: req.user.username,
         incomeTags: incomeTags,
         expenseTags: expenseTags,
+        incomes: incomes,
+        totalIncome: totalIncome,
+        expenses: expenses,
+        totalExpenses: totalExpenses,
       });
     } catch (err) {
       console.error(err);

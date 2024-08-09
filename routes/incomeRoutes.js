@@ -7,4 +7,6 @@ router.post("/add", addIncome);
 
 router.get("/tags", getIncomeTags);
 
+router.get("");
+
 export default router;
