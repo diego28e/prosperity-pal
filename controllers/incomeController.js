@@ -59,8 +59,14 @@ export const deleteIncome = async (req, res) => {
 // Fetch incomes for the current month
 export const getIncomesForCurrentMonth = async (req, res) => {
   const user_id = req.user.id;
-  const startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
-  const endOfMonth = moment().endOf("month").format("YYYY-MM-DD");
+  const { month, year } = req.query; // Get month and year from query parameters
+
+  const startOfMonth = moment(`${year}-${month}-01`)
+    .startOf("month")
+    .format("YYYY-MM-DD");
+  const endOfMonth = moment(`${year}-${month}-01`)
+    .endOf("month")
+    .format("YYYY-MM-DD");
 
   try {
     console.log(

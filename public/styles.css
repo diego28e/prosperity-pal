@@ -83,6 +83,7 @@ ul {
   padding: 5px;
   border: 0.5px solid #000;
   border-radius: 5px;
+  font-size: 0.7rem;
 }
 
 .balance-summary {
@@ -105,9 +106,14 @@ ul {
   padding: 0.5rem 0.2rem;
 }
 
+.dataDescriptionConainer {
+  gap: 5px;
+  display: flex;
+  justify-content: center;
+}
 .income-list,
 .expense-list {
-  display: none;
+  /* display: none; */
   min-width: 50%;
 }
 

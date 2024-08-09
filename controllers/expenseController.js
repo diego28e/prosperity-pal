@@ -5,13 +5,6 @@ export const addExpense = async (req, res) => {
   const { amount, date, tag_name } = req.body;
   const user_id = req.user.id;
 
-  // Log the values received from the frontend
-  /*   console.log("Received values from frontend:");
-  console.log("Amount:", amount);
-  console.log("Date:", date);
-  console.log("Tag Name:", tag_name);
-  console.log("User ID:", user_id); */
-
   try {
     // Insert the tag if it doesn't exist
     await db.query(
@@ -66,8 +59,14 @@ export const deleteExpense = async (req, res) => {
 //Fetch expenses for the current month
 export const getExpensesForCurrentMonth = async (req, res) => {
   const user_id = req.user.id;
-  const startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
-  const endOfMonth = moment().endOf("month").format("YYYY-MM-DD");
+  const { month, year } = req.query; // Get month and year from query parameters
+
+  const startOfMonth = moment(`${year}-${month}-01`)
+    .startOf("month")
+    .format("YYYY-MM-DD");
+  const endOfMonth = moment(`${year}-${month}-01`)
+    .endOf("month")
+    .format("YYYY-MM-DD");
 
   try {
     console.log(

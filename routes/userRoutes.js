@@ -10,6 +10,7 @@ import {
   getExpensesForCurrentMonth,
   deleteExpense,
 } from "../controllers/expenseController.js";
+import moment from "moment";
 
 const router = express.Router();
 
@@ -35,6 +36,11 @@ router.get("/secrets", async (req, res) => {
 
   if (req.isAuthenticated()) {
     try {
+      const month = req.query.month || moment().format("MM");
+      const year = req.query.year || moment().format("YYYY");
+
+      const formattedDate = moment(`${year}-${month}-01`).format("MMMM YYYY");
+
       const incomeTags = await getIncomeTags(req, res);
       const expenseTags = await getExpenseTags(req, res);
       const { incomes, totalIncome } = await getIncomesForCurrentMonth(
@@ -54,6 +60,9 @@ router.get("/secrets", async (req, res) => {
         totalIncome: totalIncome,
         expenses: expenses,
         totalExpenses: totalExpenses,
+        formattedDate: formattedDate,
+        month: month,
+        year: year,
       });
       console.log(incomes);
     } catch (err) {

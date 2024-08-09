@@ -9,6 +9,22 @@
   <div class="balance-summary">
     <!--     <h3>Total Income: <%= totalIncome.toLocaleString() %></h3>
     <h3>Total Expenses: <%= totalExpenses.toLocaleString() %></h3> -->
+    <div class="currentMonth">
+      <i class="fas fa-chevron-left" id="prev-month"></i>
+      <span id="month-year-display"> <%= formattedDate %> </span>
+      <i class="fas fa-chevron-right" id="next-month"></i>
+    </div>
+    <!-- Add a hidden form to store the current month and year -->
+    <form
+      id="month-year-form"
+      action="/secrets"
+      method="GET"
+      style="display: none"
+    >
+      <input type="hidden" name="month" id="month-input" value="<%= month %>" />
+      <input type="hidden" name="year" id="year-input" value="<%= year %>" />
+    </form>
+
     <h3>
       Remaining Balance: <%= (totalIncome - totalExpenses).toLocaleString() %>
     </h3>
@@ -38,7 +54,7 @@
         </datalist>
         <button type="submit">Add Income</button>
       </form>
-      <button class="showButton" data-target="income-list">Show Income</button>
+      <!-- <button class="showButton" data-target="income-list">Show Income</button> -->
     </div>
 
     <!-- expense container -->
@@ -68,16 +84,13 @@
         </div>
         <button type="submit">Add Expense</button>
       </form>
-      <button class="showButton" data-target="expense-list">
+      <!--       <button class="showButton" data-target="expense-list">
         Show expense
-      </button>
+      </button> -->
     </div>
   </div>
 
-  <div
-    style="display: flex; justify-content: center"
-    class="dataDescriptionConainer"
-  >
+  <div class="dataDescriptionConainer">
     <!--Display list of income-->
     <div id="income-list" class="income-list">
       <h3>Incomes for the current month:</h3>
@@ -132,29 +145,41 @@
 </div>
 
 <script>
-  document.querySelectorAll(".showButton").forEach((button) => {
-    button.addEventListener("click", () => {
-      const targetId = button.getAttribute("data-target");
-      const targetElement = document.getElementById(targetId);
-      const currentlyVisibleElement = document.querySelector(
-        '.toggleElement:not([style*="display: none"])'
-      );
+  const monthInput = document.getElementById("month-input");
+  const yearInput = document.getElementById("year-input");
+  const monthYearForm = document.getElementById("month-year-form");
+  const monthYearDisplay = document.getElementById("month-year-display");
 
-      if (
-        currentlyVisibleElement &&
-        currentlyVisibleElement !== targetElement
-      ) {
-        currentlyVisibleElement.style.display = "none";
-      }
+  document.getElementById("prev-month").addEventListener("click", () => {
+    const currentMonth = parseInt(monthInput.value);
+    const currentYear = parseInt(yearInput.value);
 
-      if (
-        targetElement.style.display === "none" ||
-        targetElement.style.display === ""
-      ) {
-        targetElement.style.display = "block";
-      } else {
-        targetElement.style.display = "none";
-      }
-    });
+    if (currentMonth === 1) {
+      monthInput.value = 12;
+      yearInput.value = currentYear - 1;
+    } else {
+      monthInput.value = currentMonth - 1;
+    }
+
+    monthYearForm.submit();
   });
+
+  document.getElementById("next-month").addEventListener("click", () => {
+    const currentMonth = parseInt(monthInput.value);
+    const currentYear = parseInt(yearInput.value);
+
+    if (currentMonth === 12) {
+      monthInput.value = 1;
+      yearInput.value = currentYear + 1;
+    } else {
+      monthInput.value = currentMonth + 1;
+    }
+
+    monthYearForm.submit();
+  });
+
+  // Update the month-year display
+  monthYearDisplay.innerText = moment(
+    `${yearInput.value}-${monthInput.value}-01`
+  ).format("MMMM YYYY");
 </script>
