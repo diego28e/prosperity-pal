@@ -38,30 +38,7 @@
         </datalist>
         <button type="submit">Add Income</button>
       </form>
-      <div class="income-list">
-        <h3>Incomes for the current month:</h3>
-        <ul>
-          <% incomes.forEach(income => { %>
-          <li class="incomeList">
-            <p class="incomeBlock">
-              <%= income.tag_name %>: <%=
-              parseFloat(income.amount).toLocaleString() %>
-
-              <span class="incomeDate"
-                ><%= new Date(income.date).toLocaleDateString() %></span
-              >
-            </p>
-            <span class="editDelete"
-              ><form action="/income/delete/<%= income.id %>" method="POST">
-                <button type="submit" class="deleteButton">
-                  <i class="fa-solid fa-trash"></i>
-                </button></form
-            ></span>
-          </li>
-          <% }); %>
-        </ul>
-        <h3>Total Income: <%= totalIncome.toLocaleString() %></h3>
-      </div>
+      <button class="showButton" data-target="income-list">Show Income</button>
     </div>
 
     <!-- expense container -->
@@ -91,51 +68,93 @@
         </div>
         <button type="submit">Add Expense</button>
       </form>
+      <button class="showButton" data-target="expense-list">
+        Show expense
+      </button>
+    </div>
+  </div>
 
-      <!-- Display the list of expenses -->
-      <div class="expense-list">
-        <h3>Expenses for the current month:</h3>
-        <ul>
-          <% expenses.forEach(expense => { %>
-          <li class="expenseList">
-            <p class="expenseBlock">
-              <%= expense.tag_name %>: <%=
-              parseFloat(expense.amount).toLocaleString() %>
+  <div
+    style="display: flex; justify-content: center"
+    class="dataDescriptionConainer"
+  >
+    <!--Display list of income-->
+    <div id="income-list" class="income-list">
+      <h3>Incomes for the current month:</h3>
+      <ul>
+        <% incomes.forEach(income => { %>
+        <li class="incomeList">
+          <p class="incomeBlock">
+            <%= income.tag_name %>: <%=
+            parseFloat(income.amount).toLocaleString() %>
 
-              <span class="expenseDate"
-                ><%= new Date(expense.date).toLocaleDateString() %></span
-              >
-            </p>
-            <span class="editDelete"
-              ><form action="/expense/delete/<%= expense.id %>" method="POST">
-                <button type="submit" class="deleteButton">
-                  <i class="fa-solid fa-trash"></i>
-                </button></form
-            ></span>
-          </li>
-          <% }); %>
-        </ul>
-        <h3>Total Expenses: <%= totalExpenses.toLocaleString() %></h3>
-      </div>
+            <span class="incomeDate"
+              ><%= new Date(income.date).toLocaleDateString() %></span
+            >
+          </p>
+          <span class="editDelete"
+            ><form action="/income/delete/<%= income.id %>" method="POST">
+              <button type="submit" class="deleteButton">
+                <i class="fa-solid fa-trash"></i>
+              </button></form
+          ></span>
+        </li>
+        <% }); %>
+      </ul>
+      <h3>Total Income: <%= totalIncome.toLocaleString() %></h3>
+    </div>
+    <!-- Display the list of expenses -->
+    <div id="expense-list" class="expense-list">
+      <h3>Expenses for the current month:</h3>
+      <ul>
+        <% expenses.forEach(expense => { %>
+        <li class="expenseList">
+          <p class="expenseBlock">
+            <%= expense.tag_name %>: <%=
+            parseFloat(expense.amount).toLocaleString() %>
+
+            <span class="expenseDate"
+              ><%= new Date(expense.date).toLocaleDateString() %></span
+            >
+          </p>
+          <span class="editDelete"
+            ><form action="/expense/delete/<%= expense.id %>" method="POST">
+              <button type="submit" class="deleteButton">
+                <i class="fa-solid fa-trash"></i>
+              </button></form
+          ></span>
+        </li>
+        <% }); %>
+      </ul>
+      <h3>Total Expenses: <%= totalExpenses.toLocaleString() %></h3>
     </div>
   </div>
 </div>
 
 <script>
-  document
-    .getElementById("income-form")
-    .addEventListener("submit", function (event) {
-      //event.preventDefault(); // Prevent form submission for debugging
+  document.querySelectorAll(".showButton").forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetId = button.getAttribute("data-target");
+      const targetElement = document.getElementById(targetId);
+      const currentlyVisibleElement = document.querySelector(
+        '.toggleElement:not([style*="display: none"])'
+      );
 
-      const amount = document.querySelector("input[name='amount']").value;
-      const date = document.querySelector("input[name='date']").value;
-      const tagName = document.querySelector("input[name='tag_name']").value;
+      if (
+        currentlyVisibleElement &&
+        currentlyVisibleElement !== targetElement
+      ) {
+        currentlyVisibleElement.style.display = "none";
+      }
 
-      console.log("Form submitted with the following data:");
-      console.log("Amount:", amount);
-      console.log("Date:", date);
-      console.log("Tag Name:", tagName);
-
-      // Allow form to be submitted
+      if (
+        targetElement.style.display === "none" ||
+        targetElement.style.display === ""
+      ) {
+        targetElement.style.display = "block";
+      } else {
+        targetElement.style.display = "none";
+      }
     });
+  });
 </script>

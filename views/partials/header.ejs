@@ -17,6 +17,40 @@
   </head>
 
   <body>
-    <div><h1>THIS IS THE HEADER</h1></div>
+    <div>
+      <h1 id="monthTitle"></h1>
+    </div>
   </body>
+  <script>
+    const currentDate = new Date();
+
+    const currentMonth = currentDate.getMonth();
+    console.log("The current month is " + currentMonth);
+
+    //Array of month names
+
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const monthName = monthNames[currentMonth];
+
+    //Find the h1 element
+    const monthTitle = document.querySelector("#monthTitle");
+
+    //Append the month name
+
+    monthTitle.textContent = `${monthName}`;
+  </script>
 </html>
