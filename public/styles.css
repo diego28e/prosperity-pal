@@ -1,6 +1,15 @@
 h1 {
-  color: red;
+  color: #00dfdf;
   text-align: center;
+}
+
+.headerSection {
+  background-color: #252121;
+}
+
+h1#header {
+  font-size: 1rem;
+  padding: 1rem;
 }
 
 body {
@@ -10,6 +19,18 @@ body {
 .centered {
   padding-top: 200px;
   text-align: center;
+}
+
+.balance-summary {
+  padding: 2rem 1rem;
+  border: #ccc solid 0.5px;
+  border-radius: 5px;
+  margin: 1rem;
+  box-shadow: inset 2px 2px 8px 3px #ccc;
+}
+#monthBalance {
+  font-size: 2rem;
+  color: rgb(13, 161, 13);
 }
 
 .secret-text {
@@ -23,6 +44,31 @@ body {
   flex-direction: column;
 }
 
+.container {
+  max-width: 1300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+#logout {
+  position: absolute;
+  text-decoration: none;
+  padding: 1rem;
+  border: 0.5px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  right: 5px;
+  top: 0;
+  transition: all 0.3s ease;
+}
+
+#logout:hover {
+  background-color: #00dfdf;
+  color: #fff;
+  font-weight: bold;
+}
 .incomeContainer form,
 .expenseContainer form {
   display: flex;
@@ -107,9 +153,11 @@ ul {
 }
 
 .dataDescriptionConainer {
+  margin: 1rem 0 2rem 0;
   gap: 5px;
   display: flex;
   justify-content: center;
+  min-width: 90%;
 }
 .income-list,
 .expense-list {
@@ -124,5 +172,11 @@ ul {
 .showButton {
   margin: 10px;
   padding: 10px;
+  cursor: pointer;
+}
+
+#prev-month,
+#next-month {
+  padding: 0.5rem;
   cursor: pointer;
 }

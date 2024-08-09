@@ -11,15 +11,24 @@ import {
   deleteExpense,
 } from "../controllers/expenseController.js";
 import moment from "moment";
+import { getRandomQuote } from "../quotes.js";
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("home.ejs");
+  const randomQuote = getRandomQuote();
+  res.render("home.ejs", {
+    quote: randomQuote.quote,
+    author: randomQuote.author,
+  });
 });
 
 router.get("/login", (req, res) => {
-  res.render("login.ejs");
+  const randomQuote = getRandomQuote();
+  res.render("login.ejs", {
+    quote: randomQuote.quote,
+    author: randomQuote.author,
+  });
 });
 
 router.get("/logout", (req, res) => {
@@ -52,6 +61,9 @@ router.get("/secrets", async (req, res) => {
         req,
         res
       );
+
+      const randomQuote = getRandomQuote(); // Get a random quote
+
       res.render("dashboard.ejs", {
         displayName: req.user.username,
         incomeTags: incomeTags,
@@ -63,6 +75,8 @@ router.get("/secrets", async (req, res) => {
         formattedDate: formattedDate,
         month: month,
         year: year,
+        quote: randomQuote.quote, // Pass the quote
+        author: randomQuote.author, // Pass the author
       });
       console.log(incomes);
     } catch (err) {
@@ -70,7 +84,7 @@ router.get("/secrets", async (req, res) => {
       res.status(500).send("Server error");
     }
   } else {
-    res.redirect("/login");
+    res.redirect("/");
   }
 });
 
@@ -85,7 +99,7 @@ router.get(
   "/auth/google/secrets",
   passport.authenticate("google", {
     successRedirect: "/secrets",
-    failureRedirect: "/login",
+    failureRedirect: "/",
   })
 );
 

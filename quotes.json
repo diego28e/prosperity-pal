@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "quote": "Financial freedom is available to those who learn about it and work for it",
+    "author": "Robert Kiyosaki"
+  },
+  {
+    "id": 2,
+    "quote": "Money is only a tool. It will take you wherever you wish, but it will not replace you as the driver.",
+    "author": "Ayn Rand"
+  },
+  {
+    "id": 3,
+    "quote": "The best investment you can make is in yourself.",
+    "author": "Warren Buffett"
+  },
+  {
+    "id": 4,
+    "quote": "Formal education will make you a living; self-education will make you a fortune.",
+    "author": "Jim Rohn"
+  },
+  {
+    "id": 5,
+    "quote": "The best way to predict the future is to create it.",
+    "author": "Peter Drucker"
+  },
+  {
+    "id": 6,
+    "quote": "Money is a terrible master but an excellent servant.",
+    "author": "P.T. Barnum"
+  },
+  {
+    "id": 7,
+    "quote": "The stock market is a device for transferring money from the impatient to the patient.",
+    "author": "Warren Buffett"
+  }
+]

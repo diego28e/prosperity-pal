@@ -25,7 +25,7 @@ export const authenticateUser = () => {
             const newUser = await db.query(
               "INSERT INTO users (username, email, password, google_id) VALUES ($1, $2, $3,$4) RETURNING *",
               [
-                profile.diplayName,
+                profile.displayName,
                 profile.emails[0].value,
                 "google",
                 profile.id,
