@@ -1,2 +1,5 @@
 .env
 node_modules/
+*.pem
+*.yml
+us-east-1-bundle.pem.base64

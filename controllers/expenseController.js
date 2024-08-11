@@ -26,7 +26,7 @@ export const addExpense = async (req, res) => {
     }
 
     const tag_id = tagResult.rows[0].id;
-    console.log("Tag ID:", tag_id);
+    /* console.log("Tag ID:", tag_id); */
 
     // Insert the expense entry with the retrieved tag_id
     await db.query(
@@ -69,9 +69,9 @@ export const getExpensesForCurrentMonth = async (req, res) => {
     .format("YYYY-MM-DD");
 
   try {
-    console.log(
+    /* console.log(
       `Fetching expenses for user_id: ${user_id} between ${startOfMonth} and ${endOfMonth}`
-    );
+    ); */
 
     //Fetch expenses
     const expensesResult = await db.query(
@@ -90,8 +90,8 @@ export const getExpensesForCurrentMonth = async (req, res) => {
     );
 
     //Log the data retrieved from the database
-    console.log("Expenses retrieved from databse:", expenses);
-    console.log("total expenses:", totalExpenses);
+    /*     console.log("Expenses retrieved from databse:", expenses);
+    console.log("total expenses:", totalExpenses); */
 
     return { expenses, totalExpenses };
   } catch (err) {

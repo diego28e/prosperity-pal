@@ -41,7 +41,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/secrets", async (req, res) => {
-  console.log(req.user);
+  /* console.log(req.user); */
 
   if (req.isAuthenticated()) {
     try {
@@ -78,7 +78,7 @@ router.get("/secrets", async (req, res) => {
         quote: randomQuote.quote, // Pass the quote
         author: randomQuote.author, // Pass the author
       });
-      console.log(incomes);
+      /* console.log(incomes); */
     } catch (err) {
       console.error(err);
       res.status(500).send("Server error");

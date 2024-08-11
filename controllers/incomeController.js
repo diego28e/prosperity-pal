@@ -26,7 +26,7 @@ export const addIncome = async (req, res) => {
     }
 
     const tag_id = tagResult.rows[0].id;
-    console.log("Tag ID:", tag_id);
+    /* console.log("Tag ID:", tag_id); */
 
     // Insert the income entry with the retrieved tag_id
     await db.query(
@@ -69,9 +69,9 @@ export const getIncomesForCurrentMonth = async (req, res) => {
     .format("YYYY-MM-DD");
 
   try {
-    console.log(
+    /*     console.log(
       `Fetching incomes for user_id: ${user_id} between ${startOfMonth} and ${endOfMonth}`
-    );
+    ); */
 
     // Fetch incomes
     const incomesResult = await db.query(
@@ -90,8 +90,8 @@ export const getIncomesForCurrentMonth = async (req, res) => {
     );
 
     // Log the data retrieved from the database
-    console.log("Incomes retrieved from database:", incomes);
-    console.log("Total Income:", totalIncome);
+    /* console.log("Incomes retrieved from database:", incomes);
+    console.log("Total Income:", totalIncome); */
 
     return { incomes, totalIncome };
   } catch (err) {
