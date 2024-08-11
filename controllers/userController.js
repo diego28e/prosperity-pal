@@ -5,13 +5,17 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 dotenv.config();
 
 export const authenticateUser = () => {
+  console.log(
+    `Callback URL being used: ${process.env.DOMAIN}/auth/google/secrets`
+  );
+
   passport.use(
     "google",
     new GoogleStrategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: `${process.env.DOMAIN}/auth/google/secrets`,
+        callbackURL: "https://academiadelcodigo.com/auth/google/secrets",
         userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
       },
       async (accessToken, refreshToken, profile, cb) => {
