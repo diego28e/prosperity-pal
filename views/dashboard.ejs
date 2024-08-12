@@ -2,7 +2,7 @@
 
 <div class="container">
   <a id="logout" href="/logout" role="button">Log Out</a>
-  <h1>Welcome, <%= displayName %></h1>
+  <h1 id="displayName">Welcome, <%= displayName %></h1>
   <div class="currentMonth">
     <i class="fas fa-chevron-left" id="prev-month"></i>
     <span id="month-year-display"> <%= formattedDate %> </span>
@@ -10,7 +10,6 @@
   </div>
 
   <div class="balance-summary">
-    <!-- Add a hidden form to store the current month and year -->
     <form
       id="month-year-form"
       action="/secrets"
@@ -28,12 +27,49 @@
   </div>
   <div class="incomeExpense">
     <div class="incomeContainer">
-      <h2>Income</h2>
+      <span
+        style="
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          flex-direction: column;
+        "
+      >
+        <h2>Add Income</h2>
+        <i class="fa-solid fa-circle-plus fa-2x" id="open-income-modal"></i>
+      </span>
+    </div>
+
+    <!-- expense container -->
+    <div class="expenseContainer">
+      <span
+        style="
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          flex-direction: column;
+        "
+      >
+        <h2>Add Expense</h2>
+        <i class="fa-solid fa-circle-minus fa-2x" id="open-expense-modal"></i>
+      </span>
+    </div>
+  </div>
+
+  <!-- Income Modal -->
+  <div id="income-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-income-modal">&times;</span>
       <form id="income-form" action="/income/add" method="POST">
         <div class="amountAndDate">
           <div class="dataBlock">
             <label for="amount">Income amount:</label>
-            <input type="text" name="amount" required />
+            <input
+              placeholder="enter the amount"
+              type="text"
+              name="amount"
+              required
+            />
           </div>
           <div class="dataBlock">
             <label for="date">Date:</label>
@@ -41,8 +77,14 @@
           </div>
         </div>
         <div class="dataBlock">
-          <label for="tag">Tag:</label>
-          <input type="text" name="tag_name" list="income-tags" required />
+          <label for="tag">Income name:</label>
+          <input
+            placeholder="give a name to your income"
+            type="text"
+            name="tag_name"
+            list="income-tags"
+            required
+          />
         </div>
         <datalist id="income-tags">
           <% if (incomeTags) { %> <% incomeTags.forEach(tag => { %>
@@ -51,18 +93,24 @@
         </datalist>
         <button type="submit">Add Income</button>
       </form>
-      <!-- <button class="showButton" data-target="income-list">Show Income</button> -->
     </div>
+  </div>
 
-    <!-- expense container -->
-    <div class="expenseContainer">
-      <h2>Expense</h2>
+  <!-- Expense Modal -->
+  <div id="expense-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-expense-modal">&times;</span>
       <form id="expense-form" action="/expense/add" method="POST">
         <div class="inputContainer">
           <div class="amountAndDate">
             <div class="dataBlock">
               <label for="amount">Expense amount:</label>
-              <input type="text" name="amount" required />
+              <input
+                placeholder="enter the amount"
+                type="text"
+                name="amount"
+                required
+              />
             </div>
             <div class="dataBlock">
               <label for="date">Date:</label>
@@ -70,8 +118,14 @@
             </div>
           </div>
           <div class="dataBlock">
-            <label for="tag">Tag:</label>
-            <input type="text" name="tag_name" list="expense-tags" required />
+            <label for="tag">Expense name:</label>
+            <input
+              placeholder="give a name to your expense"
+              type="text"
+              name="tag_name"
+              list="expense-tags"
+              required
+            />
           </div>
           <datalist id="expense-tags">
             <% if (expenseTags) { %> <% expenseTags.forEach(tag => { %>
@@ -81,9 +135,6 @@
         </div>
         <button type="submit">Add Expense</button>
       </form>
-      <!--       <button class="showButton" data-target="expense-list">
-        Show expense
-      </button> -->
     </div>
   </div>
 
@@ -99,21 +150,20 @@
           <p class="incomeBlock">
             <%= income.tag_name %>: <%=
             parseFloat(income.amount).toLocaleString() %>
-
             <span class="incomeDate"
               ><%= new Date(income.date).toLocaleDateString() %></span
             >
           </p>
-          <span class="editDelete"
-            ><form action="/income/delete/<%= income.id %>" method="POST">
+          <span class="editDelete">
+            <form action="/income/delete/<%= income.id %>" method="POST">
               <button type="submit" class="deleteButton">
                 <i class="fa-solid fa-trash"></i>
-              </button></form
-          ></span>
+              </button>
+            </form>
+          </span>
         </li>
         <% }); %>
       </ul>
-      <!-- <h3>Total Income: <%= totalIncome.toLocaleString() %></h3> -->
     </div>
     <!-- Display the list of expenses -->
     <div id="expense-list" class="expense-list">
@@ -126,21 +176,20 @@
           <p class="expenseBlock">
             <%= expense.tag_name %>: <%=
             parseFloat(expense.amount).toLocaleString() %>
-
             <span class="expenseDate"
               ><%= new Date(expense.date).toLocaleDateString() %></span
             >
           </p>
-          <span class="editDelete"
-            ><form action="/expense/delete/<%= expense.id %>" method="POST">
+          <span class="editDelete">
+            <form action="/expense/delete/<%= expense.id %>" method="POST">
               <button type="submit" class="deleteButton">
                 <i class="fa-solid fa-trash"></i>
-              </button></form
-          ></span>
+              </button>
+            </form>
+          </span>
         </li>
         <% }); %>
       </ul>
-      <!-- <h3>Total Expenses: <%= totalExpenses.toLocaleString() %></h3> -->
     </div>
   </div>
 </div>
@@ -150,13 +199,12 @@
   const yearInput = document.getElementById("year-input");
   const monthYearForm = document.getElementById("month-year-form");
 
-  // Automatically submit the form if the page is loaded without month and year in the query string
   if (!location.search.includes("month") || !location.search.includes("year")) {
     const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1; // getMonth is 0-indexed
+    const currentMonth = currentDate.getMonth() + 1;
     const currentYear = currentDate.getFullYear();
 
-    monthInput.value = currentMonth.toString().padStart(2, "0"); // Ensure month is always two digits
+    monthInput.value = currentMonth.toString().padStart(2, "0");
     yearInput.value = currentYear;
 
     monthYearForm.submit();
@@ -189,4 +237,37 @@
 
     monthYearForm.submit();
   });
+
+  // Modal functionality
+  const incomeModal = document.getElementById("income-modal");
+  const expenseModal = document.getElementById("expense-modal");
+  const openIncomeModal = document.getElementById("open-income-modal");
+  const openExpenseModal = document.getElementById("open-expense-modal");
+  const closeIncomeModal = document.getElementById("close-income-modal");
+  const closeExpenseModal = document.getElementById("close-expense-modal");
+
+  openIncomeModal.onclick = function () {
+    incomeModal.style.display = "block";
+  };
+
+  openExpenseModal.onclick = function () {
+    expenseModal.style.display = "block";
+  };
+
+  closeIncomeModal.onclick = function () {
+    incomeModal.style.display = "none";
+  };
+
+  closeExpenseModal.onclick = function () {
+    expenseModal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == incomeModal) {
+      incomeModal.style.display = "none";
+    }
+    if (event.target == expenseModal) {
+      expenseModal.style.display = "none";
+    }
+  };
 </script>

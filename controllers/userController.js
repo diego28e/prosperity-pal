@@ -15,7 +15,7 @@ export const authenticateUser = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "https://academiadelcodigo.com/auth/google/secrets",
+        callbackURL: `${process.env.DOMAIN}/auth/google/secrets`,
         userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
       },
       async (accessToken, refreshToken, profile, cb) => {

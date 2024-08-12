@@ -3,6 +3,10 @@ h1 {
   text-align: center;
 }
 
+#displayName {
+  text-transform: capitalize;
+}
+
 .headerSection {
   background-color: #252121;
 }
@@ -64,6 +68,12 @@ body {
   transition: all 0.3s ease;
 }
 
+.currentMonth {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
 #logout:hover {
   background-color: #00dfdf;
   color: #fff;
@@ -78,7 +88,19 @@ body {
 .incomeExpense {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
+}
+
+.incomeContainer,
+.expenseContainer {
+  border: solid 0.5px #ccc;
+  padding: 1rem;
+  text-align: center;
+}
+
+.incomeContainer i,
+.expenseContainer i {
+  cursor: pointer;
 }
 
 .dataBlock {
@@ -163,6 +185,8 @@ ul {
 .expense-list {
   /* display: none; */
   min-width: 50%;
+  box-shadow: #000 0px 0px 5px;
+  padding: 0.7rem;
 }
 
 .visible {
@@ -179,4 +203,69 @@ ul {
 #next-month {
   padding: 0.5rem;
   cursor: pointer;
+}
+
+#prev-month:hover,
+#next-month:hover {
+  background-color: #00dfdf;
+  color: #fff;
+}
+
+/* Modal container */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal content box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 2rem;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 500px;
+  border-radius: 10px;
+}
+
+/* Close button */
+.close {
+  color: red;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 670px) {
+  .dataDescriptionConainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dataDescriptionConainer h3 {
+    text-align: center;
+  }
+
+  #displayName {
+    font-size: 25px;
+    max-width: 70%;
+    padding: 1rem;
+  }
 }
