@@ -175,10 +175,11 @@ ul {
 }
 
 .dataDescriptionConainer {
-  margin: 1rem 0 2rem 0;
-  gap: 5px;
+  margin: 2rem 0;
+  gap: 10px;
   display: flex;
   justify-content: center;
+  /* flex-direction: column; */
   min-width: 90%;
 }
 .income-list,
@@ -228,9 +229,9 @@ ul {
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
-  padding: 2rem;
+  padding: 3rem;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 98%; /* Could be more or less, depending on screen size */
   max-width: 500px;
   border-radius: 10px;
 }
@@ -253,19 +254,16 @@ ul {
 }
 
 @media (max-width: 670px) {
-  .dataDescriptionConainer {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .dataDescriptionConainer h3 {
-    text-align: center;
-  }
-
   #displayName {
-    font-size: 25px;
-    max-width: 70%;
+    max-width: 450px;
     padding: 1rem;
+  }
+
+  #dataDescriptionConainer {
+    flex-direction: column;
+  }
+
+  #header {
+    font-size: 2rem;
   }
 }
