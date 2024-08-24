@@ -15,7 +15,7 @@ const db = new Pool({
   port: process.env.PG_PORT,
   ssl: {
     ca: caCert,
-    rejectUnauthorized: true, // Enable SSL certificate verification
+    rejectUnauthorized: false, // Enable SSL certificate verification
   },
 });
 
