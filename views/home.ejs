@@ -1,16 +1,22 @@
 <%- include('partials/header') %>
 
-<div class="jumbotron centered">
+<div class="centered">
   <div class="container">
-    <i class="fas fa-piggy-bank fa-6x"></i>
+    <img id="prosperity-logo" src="/prosperity-pal.png" alt="" />
+    <!-- <i class="fas fa-piggy-bank fa-6x"></i> -->
     <h1 class="display-3">Manage your money in a simple way</h1>
     <p class="lead">I'm your prosperity Pal!</p>
+    <em class="author-name">Developed by Diego Espinosa</em>
     <hr />
     <!-- <a class="btn btn-light btn-lg" href="/register" role="button">Register</a> -->
-    <div class="col-sm-4">
+    <div class="login-btn-container">
       <div class="card">
         <div class="card-body">
-          <a class="btn btn-block" href="/auth/google" role="button">
+          <a
+            class="btn btn-block"
+            href="http://localhost:3000/auth/google"
+            role="button"
+          >
             <i class="fab fa-google"></i>
             Sign In with Google
           </a>

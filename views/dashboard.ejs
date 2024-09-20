@@ -19,10 +19,10 @@
       <input type="hidden" name="month" id="month-input" value="<%= month %>" />
       <input type="hidden" name="year" id="year-input" value="<%= year %>" />
     </form>
+    <span class="balance-tag">Balance</span>
 
     <h3 id="monthBalance">
-      <%=formattedDate%> Balance: <%= (totalIncome -
-      totalExpenses).toLocaleString() %>
+      <%= (totalIncome - totalExpenses).toLocaleString() %>
     </h3>
   </div>
   <div class="incomeExpense">
@@ -141,19 +141,21 @@
   <div class="dataDescriptionConainer">
     <!--Display list of income-->
     <div id="income-list" class="income-list">
-      <h3>
-        Incomes for the current month: $<%= totalIncome.toLocaleString() %>
-      </h3>
+      <h3 class="list-name">Incomes: $<%= totalIncome.toLocaleString() %></h3>
       <ul>
         <% incomes.forEach(income => { %>
         <li class="incomeList">
-          <p class="incomeBlock">
-            <%= income.tag_name %>: <%=
-            parseFloat(income.amount).toLocaleString() %>
-            <span class="incomeDate"
-              ><%= new Date(income.date).toLocaleDateString() %></span
-            >
-          </p>
+          <div class="incomeBlock">
+            <div class="incomeTagAmount">
+              <span class="incomeTag"><%= income.tag_name %>:</span>
+              <span class="listed-amount">
+                <%= parseFloat(income.amount).toLocaleString() %>
+              </span>
+            </div>
+            <span class="incomeDate">
+              <%= new Date(income.date).toLocaleDateString() %>
+            </span>
+          </div>
           <span class="editDelete">
             <form action="/income/delete/<%= income.id %>" method="POST">
               <button type="submit" class="deleteButton">
@@ -167,19 +169,23 @@
     </div>
     <!-- Display the list of expenses -->
     <div id="expense-list" class="expense-list">
-      <h3>
-        Expenses for the current month: $<%= totalExpenses.toLocaleString() %>
+      <h3 class="list-name">
+        Expenses: $<%= totalExpenses.toLocaleString() %>
       </h3>
       <ul>
         <% expenses.forEach(expense => { %>
         <li class="expenseList">
-          <p class="expenseBlock">
-            <%= expense.tag_name %>: <%=
-            parseFloat(expense.amount).toLocaleString() %>
-            <span class="expenseDate"
-              ><%= new Date(expense.date).toLocaleDateString() %></span
-            >
-          </p>
+          <div class="expenseBlock">
+            <div class="expenseTagAmount">
+              <span class="expenseTag"><%= expense.tag_name %>:</span>
+              <span class="listed-amount">
+                <%= parseFloat(expense.amount).toLocaleString() %>
+              </span>
+            </div>
+            <span class="expenseDate">
+              <%= new Date(expense.date).toLocaleDateString() %>
+            </span>
+          </div>
           <span class="editDelete">
             <form action="/expense/delete/<%= expense.id %>" method="POST">
               <button type="submit" class="deleteButton">

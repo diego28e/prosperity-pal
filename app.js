@@ -9,10 +9,9 @@ import incomeTagsRoutes from "./routes/incomeTagsRoutes.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
 import expenseTagsRoutes from "./routes/expenseTagsRoutes.js";
 import env from "dotenv";
-
+env.config();
 const app = express();
 const port = process.env.PORT || 8080;
-env.config();
 
 app.use(
   session({
