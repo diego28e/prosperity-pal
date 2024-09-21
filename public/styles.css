@@ -225,7 +225,7 @@ ul {
   padding: 0.5rem 0.2rem;
 }
 
-.dataDescriptionConainer {
+.dataDescriptionContainer {
   margin: 2rem 0;
   gap: 10px;
   display: flex;
@@ -274,6 +274,7 @@ ul {
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  align-items: center;
 }
 
 /* Modal content box */
@@ -283,7 +284,7 @@ ul {
   padding: 3rem;
   border: 1px solid #888;
   width: 98%; /* Could be more or less, depending on screen size */
-  max-width: 500px;
+  max-width: 550px;
   border-radius: 10px;
 }
 
@@ -304,17 +305,27 @@ ul {
   cursor: pointer;
 }
 
-@media (max-width: 670px) {
+@media (max-width: 700px) {
   #displayName {
     max-width: 450px;
     padding: 1rem;
   }
 
-  #dataDescriptionConainer {
+  .dataDescriptionContainer {
     flex-direction: column;
+  }
+  .headerSection {
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   #header {
-    font-size: 2rem;
+    font-size: 3rem;
+  }
+
+  .modal-content {
+    max-width: 100% !important;
   }
 }

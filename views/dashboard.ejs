@@ -138,7 +138,7 @@
     </div>
   </div>
 
-  <div class="dataDescriptionConainer">
+  <div class="dataDescriptionContainer">
     <!--Display list of income-->
     <div id="income-list" class="income-list">
       <h3 class="list-name">Incomes: $<%= totalIncome.toLocaleString() %></h3>
@@ -253,11 +253,11 @@
   const closeExpenseModal = document.getElementById("close-expense-modal");
 
   openIncomeModal.onclick = function () {
-    incomeModal.style.display = "block";
+    incomeModal.style.display = "flex";
   };
 
   openExpenseModal.onclick = function () {
-    expenseModal.style.display = "block";
+    expenseModal.style.display = "flex";
   };
 
   closeIncomeModal.onclick = function () {
