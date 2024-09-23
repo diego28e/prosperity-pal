@@ -10,7 +10,7 @@ import {
   getExpensesForCurrentMonth,
   deleteExpense,
 } from "../controllers/expenseController.js";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { getRandomQuote } from "../quotes.js";
 
 const router = express.Router();
@@ -41,14 +41,17 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/secrets", async (req, res) => {
-  /* console.log(req.user); */
-
   if (req.isAuthenticated()) {
     try {
-      const month = req.query.month || moment().format("MM");
-      const year = req.query.year || moment().format("YYYY");
+      // Get current month and year if not provided in the query
+      const currentDate = DateTime.now();
+      const month = req.query.month || currentDate.toFormat("MM");
+      const year = req.query.year || currentDate.toFormat("yyyy");
 
-      const formattedDate = moment(`${year}-${month}-01`).format("MMMM YYYY");
+      // Format the date for display (e.g., "September 2024")
+      const formattedDate = DateTime.fromObject({ year, month }).toFormat(
+        "MMMM yyyy"
+      );
 
       const incomeTags = await getIncomeTags(req, res);
       const expenseTags = await getExpenseTags(req, res);
@@ -56,7 +59,6 @@ router.get("/secrets", async (req, res) => {
         req,
         res
       );
-
       const { expenses, totalExpenses } = await getExpensesForCurrentMonth(
         req,
         res
@@ -78,7 +80,6 @@ router.get("/secrets", async (req, res) => {
         quote: randomQuote.quote, // Pass the quote
         author: randomQuote.author, // Pass the author
       });
-      /* console.log(incomes); */
     } catch (err) {
       console.error(err);
       res.status(500).send("Server error");

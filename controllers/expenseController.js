@@ -1,5 +1,5 @@
 import db from "../config/db.js";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export const addExpense = async (req, res) => {
   const { amount, date, tag_name } = req.body;
@@ -26,7 +26,6 @@ export const addExpense = async (req, res) => {
     }
 
     const tag_id = tagResult.rows[0].id;
-    /* console.log("Tag ID:", tag_id); */
 
     // Insert the expense entry with the retrieved tag_id
     await db.query(
@@ -56,24 +55,21 @@ export const deleteExpense = async (req, res) => {
   }
 };
 
-//Fetch expenses for the current month
+// Fetch expenses for the current month
 export const getExpensesForCurrentMonth = async (req, res) => {
   const user_id = req.user.id;
   const { month, year } = req.query; // Get month and year from query parameters
 
-  const startOfMonth = moment(`${year}-${month}-01`)
+  // Use Luxon to get the start and end of the month
+  const startOfMonth = DateTime.fromObject({ year, month, day: 1 })
     .startOf("month")
-    .format("YYYY-MM-DD");
-  const endOfMonth = moment(`${year}-${month}-01`)
+    .toISODate();
+  const endOfMonth = DateTime.fromObject({ year, month, day: 1 })
     .endOf("month")
-    .format("YYYY-MM-DD");
+    .toISODate();
 
   try {
-    /* console.log(
-      `Fetching expenses for user_id: ${user_id} between ${startOfMonth} and ${endOfMonth}`
-    ); */
-
-    //Fetch expenses
+    // Fetch expenses
     const expensesResult = await db.query(
       `SELECT expenses.id, expenses.amount, expenses.date, expensetags.name AS tag_name
       FROM expenses
@@ -88,10 +84,6 @@ export const getExpensesForCurrentMonth = async (req, res) => {
       (total, expense) => total + parseFloat(expense.amount),
       0
     );
-
-    //Log the data retrieved from the database
-    /*     console.log("Expenses retrieved from databse:", expenses);
-    console.log("total expenses:", totalExpenses); */
 
     return { expenses, totalExpenses };
   } catch (err) {

@@ -1,5 +1,5 @@
 import db from "../config/db.js";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export const addIncome = async (req, res) => {
   const { amount, date, tag_name } = req.body;
@@ -26,7 +26,6 @@ export const addIncome = async (req, res) => {
     }
 
     const tag_id = tagResult.rows[0].id;
-    /* console.log("Tag ID:", tag_id); */
 
     // Insert the income entry with the retrieved tag_id
     await db.query(
@@ -61,18 +60,15 @@ export const getIncomesForCurrentMonth = async (req, res) => {
   const user_id = req.user.id;
   const { month, year } = req.query; // Get month and year from query parameters
 
-  const startOfMonth = moment(`${year}-${month}-01`)
+  // Use Luxon to get the start and end of the month
+  const startOfMonth = DateTime.fromObject({ year, month, day: 1 })
     .startOf("month")
-    .format("YYYY-MM-DD");
-  const endOfMonth = moment(`${year}-${month}-01`)
+    .toISODate();
+  const endOfMonth = DateTime.fromObject({ year, month, day: 1 })
     .endOf("month")
-    .format("YYYY-MM-DD");
+    .toISODate();
 
   try {
-    /*     console.log(
-      `Fetching incomes for user_id: ${user_id} between ${startOfMonth} and ${endOfMonth}`
-    ); */
-
     // Fetch incomes
     const incomesResult = await db.query(
       `SELECT income.id, income.amount, income.date, incometags.name AS tag_name
@@ -89,14 +85,9 @@ export const getIncomesForCurrentMonth = async (req, res) => {
       0
     );
 
-    // Log the data retrieved from the database
-    /* console.log("Incomes retrieved from database:", incomes);
-    console.log("Total Income:", totalIncome); */
-
     return { incomes, totalIncome };
   } catch (err) {
     console.error("Database query error:", err);
-    /* res.status(500).send("Server error"); */
     return { incomes: [], totalIncome: 0 };
   }
 };
